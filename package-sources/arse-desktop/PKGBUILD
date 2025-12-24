@@ -1,54 +1,42 @@
 # Maintainer: ArseLinuxOS-Team
 
 pkgname=arse-desktop
-pkgver=0.8
-pkgrel=2
-pkgdesc='ArseLinuxOS configuration files for the desktop'
+pkgver=1.0
+pkgrel=1
+pkgdesc='ArseLinuxOS configuration files for the desktop (Sway/Wayland)'
 arch=('any')
 license=('GPL3')
-depends=(i3-wm polybar rofi)
+depends=(sway waybar swaylock swaybg swayidle wofi mako)
 
-source=('i3-config' 'polybar-config' 'xinitrc' 'wallpaper' 'config.rasi' 'alacritty.yml' 'xresources')
+source=('sway-config' 'waybar-config' 'waybar-style.css' 'wallpaper' 'alacritty.toml')
 
-sha512sums=('dc6cb0c3238112017a3a7dcc2041cdf788dc652d503c3c0e5a01d2de0b17d4f9fbefe6f6ff64bb64f9e94d03305a4eed59e5b59c6f6a334282d9843144c2af65'
-            '8cf6efa14a82443658a090086f2c7b41008b8a61b971adc052ef6d5f50ae7a0ee2a587cb1cfc409f6d64ba1e4ec5a4c72fb2c1504fa9c47ab02f8b8dfc50d7e6'
-            '41243453ec711eddb974e2e225a9fe51696d54b34fa07ab21f8eff76ef09ec6f82cf3d64579a542a1ff0ff2736b158c3b2328fe1ca7d0260f4b8ea22dac45c0f'
+sha512sums=('SKIP'
+            'SKIP'
+            'SKIP'
             'f7ab630a54ec574fa7d802762fd77d06c564083041e24675528a27c84c8c9c9592e9d6122a55f7d9bfc48df1a03d90e54e6344d876cb032d2b0dcf27fe885d5d'
-            '2264cc91bb8fb9b8c82868645469b602a42ae7c159f4c07cb86eee9e6411add8a030ad3cef4baf901ec8185a135bcb24b2978fd619de331f7536b3e175745b8a'
-            'a416366c5a95ae5d32c8da4236061d1b91f3fcd3c2608989c1fd72ae219ac853c1e5f49b720274eb98e5f1def8b2997293675bde3d90c69af2a3641daf5f60b6'
-            'a7e0fc6a973f9efda8abeb67d89509f8e43287812dd7aa20e3cc3782f6c5c6298c372649956d285289503527cf6f3aa84e676eb7dae4798de819d1b408a23129')
+            'SKIP')
 
 package() {
-  local i3=$pkgdir/root/.config/i3
-  local polybar=$pkgdir/root/.config/polybar
-  local xinitrc=$pkgdir/root/
+  local sway=$pkgdir/root/.config/sway
+  local waybar=$pkgdir/root/.config/waybar
   local wallpaper=$pkgdir/root/Pictures/
-  local rofiConfig=$pkgdir/root/.config/rofi/
   local alacritty=$pkgdir/root/.config/alacritty/
-  local xresources=$pkgdir/root/
 
-  local i3Skel=$pkgdir/etc/skel/.config/i3
-  local polybarSkel=$pkgdir/etc/skel/.config/polybar
-  local xinitrcSkel=$pkgdir/etc/skel/
+  local swaySkel=$pkgdir/etc/skel/.config/sway
+  local waybarSkel=$pkgdir/etc/skel/.config/waybar
   local wallpaperSkel=$pkgdir/etc/skel/Pictures/
-  local rofiConfigSkel=$pkgdir/etc/skel/.config/rofi/
   local alacrittySkel=$pkgdir/etc/skel/.config/alacritty/
-  local xresourcesSkel=$pkgdir/etc/skel/
 
-  install -Dm750 i3-config      $i3/config
-  install -Dm750 polybar-config $polybar/config
-  install -Dm750 xinitrc        $xinitrc/.xinitrc
-  install -Dm750 wallpaper      $wallpaper/wallpaper.jpg
-  install -Dm750 config.rasi    $rofiConfig/config.rasi
-  install -Dm750 alacritty.yml  $alacritty/alacritty.yml
-  install -Dm750 xresources     $xresources/.Xresources
+  install -Dm750 sway-config      $sway/config
+  install -Dm750 waybar-config    $waybar/config
+  install -Dm750 waybar-style.css $waybar/style.css
+  install -Dm750 wallpaper        $wallpaper/wallpaper.jpg
+  install -Dm750 alacritty.toml   $alacritty/alacritty.toml
 
-  install -Dm644 i3-config      $i3Skel/config
-  install -Dm644 polybar-config $polybarSkel/config
-  install -Dm644 xinitrc        $xinitrcSkel/.xinitrc
-  install -Dm644 wallpaper      $wallpaperSkel/wallpaper.jpg
-  install -Dm644 config.rasi    $rofiConfigSkel/config.rasi
-  install -Dm644 alacritty.yml  $alacrittySkel/alacritty.yml
-  install -Dm644 xresources     $xresourcesSkel/.Xresources
+  install -Dm644 sway-config      $swaySkel/config
+  install -Dm644 waybar-config    $waybarSkel/config
+  install -Dm644 waybar-style.css $waybarSkel/style.css
+  install -Dm644 wallpaper        $wallpaperSkel/wallpaper.jpg
+  install -Dm644 alacritty.toml   $alacrittySkel/alacritty.toml
 
 }

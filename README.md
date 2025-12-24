@@ -1,29 +1,38 @@
-# Arse Repository
+# ArseLinux Package Repository
 
-[![Publish to Remote Repository](https://github.com/ArseLinuxOS-Development/arse-repo/actions/workflows/push-to-repo.yml/badge.svg?branch=main)](https://github.com/ArseLinuxOS-Development/arse-repo/actions/workflows/push-to-repo.yml)
+[![Build](https://github.com/ArseLinuxOS-Development/arselinux-repo/actions/workflows/push-to-repo.yml/badge.svg?branch=main)](https://github.com/ArseLinuxOS-Development/arselinux-repo/actions/workflows/push-to-repo.yml)
 
-A collection of custom packages for Arse Linux OS.
+Custom packages for [ArseLinuxOS](https://github.com/ArseLinuxOS-Development/ArseLinuxOS-ISO).
 
-## Online Repository
+## Using the Repository
 
-Repository: [Arse Linux Repo](http://repo.arselinux.org/repo/arselinux/x86_64/)
+Add to `/etc/pacman.conf`:
 
-## Contributing Packages
+```ini
+[arse-repo]
+SigLevel = Never
+Server = https://github.com/ArseLinuxOS-Development/arselinux-repo/releases/download/arselinux
+```
 
-1. Create your package directory inside the `package-sources` folder.
-2. Copy your package script to the root of the repository: `cp package-builder.sh ../`
-3. Build your package using Docker with the following instructions:
+Then sync:
 
-### Docker
+```bash
+pacman -Sy
+```
 
-Build the Docker image:
+## Available Packages
+
+- `arse-installer` - ZFS-based system installer with TUI
+- `arse-desktop` - Desktop environment metapackage
+- `arse-hooks` - System hooks and branding
+
+## Building Packages
+
+Packages are built using Docker:
 
 ```bash
 docker build -t arse-package-builder .
+docker run -v "$(pwd):/usr/src/app" arse-package-builder package-sources/PACKAGE-NAME
 ```
 
-Run the Docker container to build your package (replace PACKAGE-DIRECTORY with your actual directory):
-
-```bash
-docker run -v "$(pwd):/usr/src/app" arse-package-builder package-sources/PACKAGE-DIRECTORY
-```
+Add new packages by creating a directory in `package-sources/` with a `PKGBUILD`.
