@@ -1,0 +1,65 @@
+#!/bin/bash
+
+# Run arse hooks related commands.
+
+Lsb_release() {
+    local file=/etc/lsb-release
+
+    if [ -z "$(grep "^DISTRIB_CODENAME=" $file)" ] ; then
+        # add missing DISTRIB_CODENAME=
+        echo "DISTRIB_CODENAME=rolling" >> $file
+    fi
+    sed -i $file \
+        -e 's|^DISTRIB_ID=.*$|DISTRIB_ID=ArseLinuxOS|' \
+        -e 's|^DISTRIB_CODENAME=.*$|DISTRIB_CODENAME=rolling|' \
+        -e 's|^DISTRIB_DESCRIPTION=.*$|DISTRIB_DESCRIPTION=\"ArseLinuxOS Linux\"|'
+}
+
+Os_release() {
+    local file=/usr/lib/os-release
+    local arsefile=/usr/lib/arselinuxos-release
+
+    # Get URLs from the ArseLinuxOS web site!
+    local home=https://arselinux.org
+    local bugs=https://github.com/ArseLinuxOS-Development/ArseLinuxOS-ISO/issues
+
+    sed -i $file \
+        -e 's|^NAME=.*$|NAME=ArseLinuxOS|' \
+        -e 's|^PRETTY_NAME=.*$|PRETTY_NAME=ArseLinuxOS|' \
+        -e "s|^HOME_URL=.*$|HOME_URL='$home'|" \
+        -e "s|^BUG_REPORT_URL=.*$|BUG_REPORT_URL='$bugs'|" \
+        -e "s|^SUPPORT_URL=.*$|SUPPORT_URL='$bugs'|" \
+        -e "s|^LOGO=.*$|LOGO=arselinuxos|" \
+        -e "s|^ID=.*$|ID=arselinuxos|" \
+        -e "s|^ID_LIKE=.*$|ID_LIKE=arch|"
+
+    if [ -z "$(grep "^ID_LIKE=" $file)" ] && [ -n "$(grep "^ID=" $file)" ] ; then
+        # add missing ID_LIKE=
+        sed -i $file -e '/^ID=/a \ID_LIKE=arch'
+    fi
+    if [ -r $arsefile ] ; then
+        # fix BUILD_ID for ArseLinuxOS
+        local buildid="$(grep "^VERSION=" $arsefile | awk '{print $1}' | cut -d '=' -f 2)"
+        sed -i $file -e "s|^BUILD_ID=.*$|BUILD_ID=$buildid|"
+    fi
+}
+
+Issues() {
+    sed -i 's|Arch|ArseLinuxOS|g' /etc/issue /usr/share/factory/etc/issue
+}
+
+Main()
+{
+    local hookname="$1"
+
+    case "$hookname" in
+        os-release)  Os_release ;;
+        lsb-release) Lsb_release ;;
+        "")          Os_release
+                     Lsb_release
+                     Issues
+                     ;;
+    esac
+}
+
+Main "$@"

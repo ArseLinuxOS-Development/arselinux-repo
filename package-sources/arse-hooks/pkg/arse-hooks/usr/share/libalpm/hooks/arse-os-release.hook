@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = filesystem
+
+[Action]
+Description = Add ArseLinuxOS specific config.
+When = PostTransaction
+Exec = /usr/bin/arse-hooks-runner os-release

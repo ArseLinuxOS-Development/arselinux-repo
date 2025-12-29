@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = arse-hooks
+
+[Action]
+Description = Update ArseLinuxOS specific hooks.
+When = PostTransaction
+Exec = /usr/bin/arse-hooks-runner
