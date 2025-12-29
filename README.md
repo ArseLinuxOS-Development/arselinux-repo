@@ -1,7 +1,5 @@
 # ArseLinux Package Repository
 
-[![Build](https://github.com/ArseLinuxOS-Development/arselinux-repo/actions/workflows/push-to-repo.yml/badge.svg?branch=main)](https://github.com/ArseLinuxOS-Development/arselinux-repo/actions/workflows/push-to-repo.yml)
-
 Custom packages for [ArseLinuxOS](https://github.com/ArseLinuxOS-Development/ArseLinuxOS-ISO).
 
 ## Using the Repository
