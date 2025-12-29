@@ -6,7 +6,7 @@ xdata = pkgtype=pkg
 pkgver = 1.0-1
 pkgdesc = ArseLinuxOS configuration files for the desktop (Sway/Wayland)
 url = 
-builddate = 1766773484
+builddate = 1767030838
 packager = Unknown Packager
 size = 336430
 arch = any

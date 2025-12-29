@@ -6,7 +6,7 @@ xdata = pkgtype=pkg
 pkgver = 1.1-1
 pkgdesc = ArseLinuxOS pacman hooks
 url = 
-builddate = 1766773434
+builddate = 1767030895
 packager = Unknown Packager
 size = 2539
 arch = any
