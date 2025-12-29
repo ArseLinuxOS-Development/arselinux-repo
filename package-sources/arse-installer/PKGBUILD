@@ -2,7 +2,7 @@
 
 pkgname=arse-installer
 pkgver=1.0
-pkgrel=8
+pkgrel=9
 pkgdesc='ArseLinuxOS installer'
 arch=('any')
 license=('GPL3')
@@ -10,7 +10,7 @@ depends=(libnewt)
 
 source=('installer' )
 
-sha512sums=('f8724ee19d13cdf369792399afc7277bf372af0351489a23e4fb977868a5f13b88217578c4d048ecf439b94cc3876e20f720c72717629d37c50cdab87c4bb006')
+sha512sums=('f7584456b4b72510e6b1fbee45c19ab5af35f9085489f9de39d21fe23f12ad34d10994b3cf875ac7d7b7833116f23d0ac7aac2d57170c29d736ead5dffdd4465')
 
 package() {
   local installer=$pkgdir/usr/bin/
