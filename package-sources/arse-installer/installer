@@ -551,10 +551,6 @@ EOF
 setup_chroot() {
     msg header "Chroot Configuration"
 
-    # Create user's home dataset before creating the user
-    msg info "Creating ZFS dataset for $USERNAME..."
-    zfs create "zroot/data/home/$USERNAME"
-
     arch-chroot /mnt /bin/bash -e <<CHROOT
 # Keyring setup
 rm -rf /etc/pacman.d/gnupg
@@ -598,10 +594,18 @@ make
 make install
 cpanm --notest --installdeps .
 
-# Create user
-useradd -m -G wheel $USERNAME
-chown -R $USERNAME:$USERNAME /home/$USERNAME
+# Create user without home directory (ZFS dataset will provide it)
+useradd -G wheel $USERNAME
 CHROOT
+
+    # Create user's home dataset AFTER user exists
+    msg info "Creating ZFS dataset for $USERNAME..."
+    zfs create "zroot/data/home/$USERNAME"
+
+    # Copy skel files and set ownership (ZFS dataset is now mounted)
+    msg info "Populating home directory from /etc/skel..."
+    cp -rT /mnt/etc/skel "/mnt/home/$USERNAME"
+    arch-chroot /mnt chown -R "$USERNAME:$USERNAME" "/home/$USERNAME"
 
     # Set passwords
     msg info "Setting passwords..."
